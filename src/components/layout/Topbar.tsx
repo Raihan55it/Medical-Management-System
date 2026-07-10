@@ -21,7 +21,7 @@ const Topbar = () => {
         >
           {theme === "light" ? "🌙" : "  🌞"}
         </button>
-        <div className="w-8 h-8 rounded-full bg-blue-500"></div>
+        {/* <div className="w-8 h-8 rounded-full bg-blue-500"></div> */}
       </div>
     </div>
   );

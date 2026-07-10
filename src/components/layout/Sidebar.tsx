@@ -15,7 +15,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           className="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-white"
-          to="/"
+          to="/patients"
         >
           Patient
         </NavLink>
