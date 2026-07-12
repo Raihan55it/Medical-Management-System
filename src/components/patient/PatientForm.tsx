@@ -24,7 +24,18 @@ const PatientForm = () => {
   const appContext = useContext(AppContext);
   if (!appContext) return null;
 
-  const { addPatient, editingPatient } = appContext;
+  const { addPatient, updatePatient, editingPatient, setEditingPatient } =
+    appContext;
+  useEffect(() => {
+    if (!editingPatient) return;
+    setName(editingPatient.name);
+    setAge(String(editingPatient.age));
+    setGender(editingPatient.gender);
+    setBloodType(editingPatient.bloodType);
+    setPhone(editingPatient.phone);
+    setEmail(editingPatient.email);
+    setAddress(editingPatient.address);
+  }, [editingPatient]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +81,7 @@ const PatientForm = () => {
     if (hasErrors) return;
 
     const patient = {
-      id: crypto.randomUUID(),
+      id: editingPatient ? editingPatient.id : crypto.randomUUID(),
       name,
       age: Number(age),
       gender: gender as "male" | "female" | "other",
@@ -86,10 +97,17 @@ const PatientForm = () => {
         | "O+"
         | "O-",
       address,
-      createdAt: new Date().toISOString(),
+      createdAt: editingPatient
+        ? editingPatient.createdAt
+        : new Date().toISOString(),
     };
     // reset form
-    addPatient(patient);
+    if (editingPatient) {
+      updatePatient(patient);
+      setEditingPatient(null);
+    } else {
+      addPatient(patient);
+    }
     setName("");
     setAge("");
     setGender("");
@@ -111,7 +129,7 @@ const PatientForm = () => {
     <div className="rounded-lg border bg-white p-6 shadow-sm dark:bg-gray-800">
       <form onSubmit={handleSubmit}>
         <h2 className="mb-4 text-xl font-semibold dark:text-white">
-          Add Patient
+          {editingPatient ? "Update Patient" : "Add Patient"}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -244,7 +262,7 @@ const PatientForm = () => {
           type="submit"
           className="mt-6 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          Add Patient
+          {editingPatient ? "Update Patient" : "Add Patient"}
         </button>
       </form>
     </div>

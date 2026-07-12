@@ -4,7 +4,9 @@ import type { Patient } from "../types/patient";
 type AppContextType = {
   patients: Patient[];
   editingPatient: Patient | null;
+  selectedPatient: Patient | null;
   setEditingPatient: React.Dispatch<React.SetStateAction<Patient | null>>;
+  setSelectedPatient: React.Dispatch<React.SetStateAction<Patient | null>>;
   addPatient: (patient: Patient) => void;
   updatePatient: (patient: Patient) => void;
   deletePatient: (id: string) => void;
@@ -18,6 +20,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     return data ? JSON.parse(data) : [];
   });
   const [editingPatient, setEditingPatient] = useState<Patient | null>(null);
+
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
   useEffect(() => {
     localStorage.setItem("patients", JSON.stringify(patients));
@@ -40,7 +44,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   };
   return (
     <AppContext.Provider
-      value={{ patients, addPatient, deletePatient, updatePatient, editingPatient, setEditingPatient }}
+      value={{
+        patients,
+        addPatient,
+        deletePatient,
+        updatePatient,
+        editingPatient,
+        setEditingPatient,
+        selectedPatient,
+        setSelectedPatient,
+      }}
     >
       {children}
     </AppContext.Provider>
