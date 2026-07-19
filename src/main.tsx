@@ -7,13 +7,11 @@ import { ThemeProvider } from "./context/ThemContext.tsx";
 import { AppProvider } from "./context/AppContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <AppProvider>
-          <App />
-        </AppProvider>
-      </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>,
+  <BrowserRouter>
+    <ThemeProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </ThemeProvider>
+  </BrowserRouter>,
 );
