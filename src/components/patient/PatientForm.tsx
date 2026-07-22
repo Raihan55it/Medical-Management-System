@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import type { PatientFormErrors } from "../../types/formError";
+import { UIContext } from "../../context/UIContext";
 
 const PatientForm = () => {
   const [name, setName] = useState("");
@@ -23,9 +24,10 @@ const PatientForm = () => {
 
   const appContext = useContext(AppContext);
   if (!appContext) return null;
-
-  const { addPatient, updatePatient, editingPatient, setEditingPatient } =
-    appContext;
+  const uiContext = useContext(UIContext);
+  if (!uiContext) return null;
+  const { addPatient, updatePatient } = appContext;
+  const { editingPatient, setEditingPatient } = uiContext;
   useEffect(() => {
     if (!editingPatient) return;
     setName(editingPatient.name);

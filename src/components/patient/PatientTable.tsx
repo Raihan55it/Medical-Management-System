@@ -9,13 +9,17 @@ import type { Patient } from "../../types/patient";
 import useDebounce from "../../hooks/useDebounce";
 import usePagination from "../../hooks/usePagination";
 import Pagination from "../pagination/Pagination";
+import { UIContext } from "../../context/UIContext";
 
 const PatientTable = () => {
+  console.log("Rendering PatientTable");
   const appContext = useContext(AppContext);
   if (!appContext) return null;
+  const uiContext = useContext(UIContext);
+  if (!uiContext) return null;
 
-  const { patients, deletePatient, setEditingPatient, setSelectedPatient } =
-    appContext;
+  const { patients, deletePatient } = appContext;
+  const { setEditingPatient, setSelectedPatient } = uiContext;
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
@@ -83,13 +87,11 @@ const PatientTable = () => {
           ))}
         </tbody>
       </table>
-      <div className="mt-4 flex items-center justify-between">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };

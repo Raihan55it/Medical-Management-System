@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { AppContext } from "../../context/AppContext";
+import { UIContext } from "../../context/UIContext";
 const PatientDetailsModal = () => {
-  const appContext = useContext(AppContext);
-  if (!appContext) return null;
-  const { selectedPatient, setSelectedPatient } = appContext;
+  const uiContext = useContext(UIContext);
+  if (!uiContext) return null;
+  const { selectedPatient, setSelectedPatient } = uiContext;
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
